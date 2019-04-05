@@ -3,7 +3,7 @@ import { Image, View, StyleSheet } from 'react-native'
 import { w } from '../../../constants'
 
 const Icon = ({ data }) => {
-  const { container, icon, cover } = styles
+  const { container, icon } = styles
   const { icon_url } = data
 
   return (
