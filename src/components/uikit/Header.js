@@ -1,18 +1,27 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { w } from '../../../constants'
 
 
-const Header = ({ 
+const Header = ({
+  category,
+  leftIcon,
+  leftColor,
   title,
-  headerColor
+  headerColor,
+  onPress
 }) => {
 
-  const { viewStyle, textStyle } = styles
+  const { viewStyle, textStyle, leftButtonStyle } = styles
 
   return (
-    <View style={[viewStyle, {backgroundColor : headerColor}]}>    
-      <Text numberOfLines={1} ellipsizeMode="tail" style={[textStyle]}>{title}</Text>
+    <View style={[viewStyle, { backgroundColor: headerColor }]}>
+      <TouchableOpacity onPress={onPress}>
+        <Ionicons name={leftIcon} style={[leftButtonStyle, { paddingLeft: category ? 10 : 20 }]} color={leftColor} />
+      </TouchableOpacity>
+
+      <Text numberOfLines={1} ellipsizeMode="tail" style={[textStyle, { paddingLeft: leftIcon ? 10 : 0 }]}>{title}</Text>
     </View>
   )
 }
@@ -34,6 +43,10 @@ const styles = StyleSheet.create({
     width: w - 40,
     fontFamily: 'AvenirNext-DemiBold',
     paddingTop: 50
+  },
+  leftButtonStyle: {
+    paddingTop: 50,
+    fontSize: 35
   }
 })
 

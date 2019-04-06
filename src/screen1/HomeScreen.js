@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 
 import { Header, Icon, Layout } from '../components/uikit'
-import { WHITE, BLUE } from '../../constants'
+import { BLUE } from '../../constants'
+import { JOKE_HOME, JOKE_CATEGORY } from '../routes';
 
 // Url vers un fichier JSON 
 const url = 'https://api.chucknorris.io/jokes/random'
@@ -14,11 +15,12 @@ export default class App extends Component {
     title: "Chuck Norris Jokes",
     joke: "",
     data: [],
-    category : []
+    category: []
   }
 
 
   componentDidMount = async () => {
+    this._getCategory()
     try {
       const response = await fetch(url)
       const data = await response.json()
@@ -41,7 +43,7 @@ export default class App extends Component {
   _getCategory = async () => {
     try {
       const response = await fetch(categoryUrl)
-      const category = await response.text()
+      const category = await response.json()
       this.setState({ category })
     } catch (error) {
       throw console.log("_getCategory error")
@@ -58,11 +60,10 @@ export default class App extends Component {
 
   render() {
     const { title, data, joke, category } = this.state
+    const { navigation } = this.props
 
-    console.log("state", this.state);
-    // voir les infos du serveur json
-    console.log('data', data)
-    console.log('category', category)
+    console.log("props", this.props)
+    console.log("navigation", navigation)
 
     return (
       <View>
@@ -75,8 +76,9 @@ export default class App extends Component {
         />
         <Layout
           joke={joke}
-          onPress={() => this._getJoke()}
           category={category}
+          onPress={() => this._getJoke()}
+          onClick={() => navigation.navigate(JOKE_CATEGORY)}
         />
       </View>
     );
